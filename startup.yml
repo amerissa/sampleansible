@@ -1,0 +1,7 @@
+- hosts: "{{env}}-servers"
+  roles:
+    - role: scm-agent
+- hosts: "{{env}}-cloudera-manager"
+  roles:
+    - role: scm-server
+    - role: scm-manager

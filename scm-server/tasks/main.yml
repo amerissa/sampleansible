@@ -1,0 +1,16 @@
+- name: change scm agent service
+  service:
+    name: cloudera-scm-server
+    state: started
+
+- name: Wait for Server to come up
+  uri:
+    url: "https://{{ groups[env + '-cloudera-manager'][0] }}:7183/api/v40/clusters/{{vars['cloudera-manager']['clustername']}}"
+    status_code: 200
+    force_basic_auth: yes
+    user: "{{vars['cloudera-manager']['username']}}"
+    password: "{{vars['cloudera-manager']['password']}}"
+  register: result
+  until: result.status in [200]
+  retries: 60
+  delay: 15

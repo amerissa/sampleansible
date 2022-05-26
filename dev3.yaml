@@ -1,0 +1,11 @@
+cloudera-manager:
+  username: admin
+  password: admin123
+  clustername: dev3
+
+env: dev3
+
+ansible_become_password: password123
+ansible_become: yes
+ansible_ssh_pass: password123
+ansible_user: amer

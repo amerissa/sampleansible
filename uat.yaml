@@ -1,0 +1,11 @@
+cloudera-manager:
+  username: admin
+  password: securepassword
+  clustername: uat123
+
+env: uat
+
+ansible_become_password: password123
+ansible_become: yes
+ansible_ssh_pass: password123
+ansible_user: ameruat

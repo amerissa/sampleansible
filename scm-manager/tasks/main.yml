@@ -1,0 +1,24 @@
+- name: Wait for Server to come up
+  uri:
+    url: "https://{{ groups[env + '-cloudera-manager'][0] }}:7183/api/v40/clusters/{{var['cloudera-manager']['clustername']}}/commands/start"
+    status_code: 200
+    force_basic_auth: yes
+    method: POST
+    user: "{{vars['cloudera-manager']['username']}}"
+    password: "{{vars['cloudera-manager']['password']}}"
+  register: result
+
+- name: wait until it is started
+  uri:
+    url: "https://{{ groups[env + '-cloudera-manager'][0] }}:7183/api/v40/clusters/{{vars['cloudera-manager']['clustername']}}"
+    method: GET
+    return_content: yes
+    status_code: 200
+    user: "{{vars['cloudera-manager']['username']}}"
+    password: "{{vars['cloudera-manager']['password']}}"
+    body_format: json
+    validate_certs: no
+  register: startupresult
+  until: startupresult.json.serviceState == "STARTED"
+  retries: 10
+  delay: 30

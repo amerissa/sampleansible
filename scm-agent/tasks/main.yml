@@ -1,0 +1,4 @@
+- name: change scm agent service
+  service:
+    name: cloudera-scm-agent
+    state: started
